@@ -26,6 +26,25 @@ const app = express();
 
 // Your code here
 
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log('Body:', req.body);
+  next();
+});
+
+
+// GET /artists
+app.get('/artists', (req, res) => {
+  const artists = getAllArtists();
+  res.json(artists);
+});
+
+// POST /artist
+app.post("/artists", (req, res) => {
+  const newArtist = addArtist(req.body);
+  res.status(201).json(newArtist);
+});
+
 // DO NOT MODIFY
 if (require.main === module) {
   const port = 8000;
