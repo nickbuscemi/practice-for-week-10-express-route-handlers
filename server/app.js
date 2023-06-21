@@ -32,6 +32,17 @@ app.use((req, res, next) => {
   next();
 });
 
+ 
+
+// GET /artist/:artistId
+app.get('/artists/:artistId', (req, res) => {
+  const artistId = Number(req.params.artistId);
+  const artist = getArtistByArtistId(artistId);
+  if (!artist) {
+    res.status(404).json({ message: "Artist not found"});
+  }
+  res.json(artist);
+});
 
 // GET /artists
 app.get('/artists', (req, res) => {
@@ -43,6 +54,16 @@ app.get('/artists', (req, res) => {
 app.post("/artists", (req, res) => {
   const newArtist = addArtist(req.body);
   res.status(201).json(newArtist);
+});
+
+// PUT /artists/:artistId
+app.put("/artists/:artistId", (req, res) => {
+  const artistId = Number(req.params.artistId);
+  const editedArtist = editArtistByArtistId(artistId, req.body);
+  if(!editedArtist){
+    res.status(404).json({ message: "Artist not found" });
+  }
+  res.json(editedArtist);
 });
 
 // DO NOT MODIFY
